@@ -1,40 +1,19 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import LoginPage from '../LoginPage';
+import ProtectedRoute from '../ProtectedRoute';
+import Dashboard from './Dashboard';
+import PrivatePage from './PrivatePage';
 
 const App = () => {
-  const {
-    loginWithRedirect,
-    isAuthenticated,
-    logout,
-    user,
-    getAccessTokenSilently,
-  } = useAuth0();
-
-  const getToken = async () => {
-    var token = await getAccessTokenSilently();
-    console.log(token);
-    console.log(user);
-  };
-
-  useEffect(() => {
-    if (isAuthenticated) getToken();
-  }, [isAuthenticated]);
   return (
-    <div className='App'>
-      <div>App</div>
-      {isAuthenticated ? (
-        <>
-          <div>
-            <p>Name:{user?.name}</p>
-          </div>
-          <button onClick={() => logout({ returnTo: window.location.origin })}>
-            Logout
-          </button>
-        </>
-      ) : (
-        <button onClick={() => loginWithRedirect()}>Login</button>
-      )}
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path='/' exact component={Dashboard} />
+        <Route path='/login' exact component={LoginPage} />
+
+        <ProtectedRoute path='/private' exact component={PrivatePage} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 

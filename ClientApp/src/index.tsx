@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AuthModule from './AuthModule';
-import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(<AuthModule />, document.getElementById('root'));
